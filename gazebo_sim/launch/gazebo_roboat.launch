@@ -1,0 +1,27 @@
+<launch>
+
+
+    <param name="robot_description"
+           command="$(find xacro)/xacro --inorder '$(find gazebo_sim)/urdf/roboat.urdf.xacro'" />
+
+
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
+              args="-urdf -model roboat -param robot_description -x 0 -y -3 -z 0" />
+
+	<!--include file="$(find gazebo_sim)/launch/spawn_urdf.launch">
+        <arg name="robot_name" value="roboat" />
+        <arg name="x" value="0.0" />
+        <arg name="y" value="-3.0" />
+        <arg name="z" value="0.0" />
+        <arg name="roll" value="0.0" />
+        <arg name="pitch" value="0.0" />
+        <arg name="yaw" value="0.0" />
+        <arg name="urdf_robot_file" value="$(find gazebo_sim)/urdf/roboat.urdf.xacro" />
+    </include-->
+
+    <!-- Publish robot model for ROS -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen">
+      <param name="robot_description" value="robot_description" />
+    </node>
+
+</launch>
